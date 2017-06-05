@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 //import com.bumptech.glide.Glide;
 
 
@@ -53,7 +55,7 @@ public class DetalleFilmActivityFragment extends Fragment {
     private void updateui(Movie movies) {
         Log.d("CARTA", movies.toString());
 
-        ivPosterImage = (ImageView) view.findViewById(R.id.ivPosterImage);
+        ivPosterImage = (ImageView) view.findViewById(R.id.ivPosterImageList);
         tvVote_average = (TextView) view.findViewById(R.id.textView);
         title = (TextView) view.findViewById(R.id.tvTitulo);
         popularity = (TextView) view.findViewById(R.id.textView2);
@@ -70,6 +72,7 @@ public class DetalleFilmActivityFragment extends Fragment {
         original_title.setText("Original title: "+movies.getOriginal_title());
         overview.setText("Overview: "+movies.getOverview());
         //release_date.setText(movies.getRelease_date());
-        //Glide.with(getContext()).load(movies.getImageUrl()).into(ivPosterImage);
+        String urlImagen = "https://image.tmdb.org/t/p/w500"+movies.getPoster_path();
+        Glide.with(getContext()).load(urlImagen).into(ivPosterImage);
     }
 }

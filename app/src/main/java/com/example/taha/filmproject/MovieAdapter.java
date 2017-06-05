@@ -9,7 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
+//import com.bumptech.glide.Glide;
+
 
 /**
  * Created by taha on 05/06/2017.
@@ -38,6 +42,8 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         // Unim el codi en les Views del Layout
         TextView tvTitle = (TextView) convertView.findViewById(R.id.tv1);
         TextView tvAdult = (TextView) convertView.findViewById(R.id.tv2);
+        ImageView ivPosterImage = (ImageView) convertView.findViewById(R.id.ivPosterImageList);
+
 
 
         // Fiquem les dades dels objectes (provinents del JSON) en el layout
@@ -47,7 +53,8 @@ public class MovieAdapter extends ArrayAdapter<Movie> {
         }else{
             tvAdult.setText("Contenido para todo el publico");
         }
-        //Glide.with(getContext()).load(movie.getImageUrl()).into(ivPosterImage);
+        String urlImagen = "https://image.tmdb.org/t/p/w500"+movie.getPoster_path();
+        Glide.with(getContext()).load(urlImagen).into(ivPosterImage);
 
         return convertView;
     }
