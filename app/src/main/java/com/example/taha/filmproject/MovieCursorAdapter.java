@@ -31,6 +31,12 @@ public class MovieCursorAdapter extends CupboardCursorAdapter<Movie>{
     @Override
     public void bindView(View view, Context context, Movie movie) {
         DatosItemBinding binding = DataBindingUtil.getBinding(view);
+        binding.tv1.setText(movie.getTitle());
+        if (movie.getAdult()){
+            binding.tv2.setText("Contenido para +18");
+        }else{
+            binding.tv2.setText("Contenido para todo el publico");
+        }
         String urlImagen = "https://image.tmdb.org/t/p/w500"+movie.getPoster_path();
         Glide.with(context).load(urlImagen).into(binding.ivPosterImageList);
     }

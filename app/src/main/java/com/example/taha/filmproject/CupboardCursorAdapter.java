@@ -4,10 +4,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
-
 import nl.qbusict.cupboard.Cupboard;
-
+import android.support.v4.widget.CursorAdapter;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 

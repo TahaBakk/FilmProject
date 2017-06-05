@@ -5,6 +5,7 @@ import android.net.Uri;
 import java.util.ArrayList;
 import nl.littlerobots.cupboard.tools.provider.UriHelper;
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
+import android.support.v4.content.CursorLoader;
 /**
  * Created by taha on 05/06/2017.
  */
@@ -19,7 +20,11 @@ public class DataManager {
     }
 
     static void deleteMovie(Context context) {
-        cupboard().withContext(context).delete(MOVIE_URI, "_id > ?", "1");
+        cupboard().withContext(context).delete(MOVIE_URI, "_id > ?", "0");
     }
+
+    static CursorLoader getCursorLoader(Context context){
+        return  new CursorLoader(context, MOVIE_URI, null, null, null, null);
+        }
 
 }

@@ -1,8 +1,32 @@
 package com.example.taha.filmproject;
 
+
+
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.databinding.DataBindingUtil;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.os.AsyncTask;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
+import com.example.taha.filmproject.databinding.FragmentMainBinding;
+
+/*
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,11 +35,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.databinding.DataBindingUtil;
-import com.example.taha.filmproject.databinding.FragmentMainBinding;
 import android.net.Uri;
 import nl.littlerobots.cupboard.tools.provider.UriHelper;
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
-
+import android.app.LoaderManager;
+import android.content.Loader;
+import android.database.Cursor;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;*/
 
 import java.util.ArrayList;
 
@@ -23,9 +51,9 @@ import java.util.ArrayList;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class MainActivityFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private ArrayList<Movie> items;
+    //private ArrayList<Movie> items;
     //private MovieAdapter adapter;
     private MovieCursorAdapter adapter;
 
@@ -41,13 +69,14 @@ public class MainActivityFragment extends Fragment {
         //ListView lvHistorial = (ListView) view.findViewById(R.id.lvHistorial);
 
 
-        items = new ArrayList<>();
-        adapter = new MovieCursorAdapter(getContext(), Movie.class);
+        //items = new ArrayList<>();
         /*adapter = new MovieAdapter(
                 getContext(),
                 R.layout.datos_item,
                 items
         );*/
+
+        adapter = new MovieCursorAdapter(getContext(), Movie.class);
 
         binding.lvHistorial.setAdapter(adapter);
 
@@ -63,8 +92,7 @@ public class MainActivityFragment extends Fragment {
             }
         });
 
-
-
+        getLoaderManager().initLoader(0,null, this);
 
         return view;
     }
@@ -84,6 +112,20 @@ public class MainActivityFragment extends Fragment {
 
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        return DataManager.getCursorLoader(getContext());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+        adapter.swapCursor(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        adapter.swapCursor(null);
+    }
 
 
     private class RefreshDataTask extends AsyncTask<Void, Void, Void> {
