@@ -26,7 +26,8 @@ import java.util.ArrayList;
 public class MainActivityFragment extends Fragment {
 
     private ArrayList<Movie> items;
-    private MovieAdapter adapter;
+    //private MovieAdapter adapter;
+    private MovieCursorAdapter adapter;
 
     public MainActivityFragment() {
     }
@@ -41,11 +42,12 @@ public class MainActivityFragment extends Fragment {
 
 
         items = new ArrayList<>();
-        adapter = new MovieAdapter(
+        adapter = new MovieCursorAdapter(getContext(), Movie.class);
+        /*adapter = new MovieAdapter(
                 getContext(),
                 R.layout.datos_item,
                 items
-        );
+        );*/
 
         binding.lvHistorial.setAdapter(adapter);
 
@@ -95,7 +97,7 @@ public class MainActivityFragment extends Fragment {
             /*UriHelper helper = UriHelper.with(MovieContentProvider.AUTHORITY);
             Uri movieUri = helper.getUri(Movie.class);
             cupboard().withContext(getContext()).put(movieUri, Movie.class, result);*/
-
+            DataManager.deleteMovie(getContext());
             DataManager.saveMovie(result, getContext());
 
 

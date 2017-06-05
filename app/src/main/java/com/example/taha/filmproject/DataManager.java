@@ -14,8 +14,12 @@ public class DataManager {
     private static UriHelper URI_HELPER = UriHelper.with(MovieContentProvider.AUTHORITY);
     private static Uri MOVIE_URI = URI_HELPER.getUri(Movie.class);
 
-    static void saveMovie(ArrayList<Movie> cartas, Context context) {
-        cupboard().withContext(context).put(MOVIE_URI, Movie.class, cartas);
+    static void saveMovie(ArrayList<Movie> movie, Context context) {
+        cupboard().withContext(context).put(MOVIE_URI, Movie.class, movie);
+    }
+
+    static void deleteMovie(Context context) {
+        cupboard().withContext(context).delete(MOVIE_URI, "_id > ?", "1");
     }
 
 }
