@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.alexvasilkov.events.Events;
+import com.alexvasilkov.events.Event;
 
 import com.bumptech.glide.Glide;
 import com.example.taha.filmproject.databinding.FragmentDetalleFilmBinding;
@@ -37,6 +39,13 @@ public class DetalleFilmActivityFragment extends Fragment {
     public DetalleFilmActivityFragment() {
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Events.register(this);
+     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -55,6 +64,11 @@ public class DetalleFilmActivityFragment extends Fragment {
         }
 
         return view;
+    }
+
+    @Events.Subscribe("cartas-selected")
+    private void onMovieSelected(Movie movies) {
+        updateui(movies);
     }
 
     private void updateui(Movie movies) {

@@ -2,50 +2,24 @@ package com.example.taha.filmproject;
 
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
-import android.os.AsyncTask;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+
+import com.alexvasilkov.events.Events;
 import com.example.taha.filmproject.databinding.FragmentMainBinding;
 
-/*
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.databinding.DataBindingUtil;
-import android.net.Uri;
-import nl.littlerobots.cupboard.tools.provider.UriHelper;
-import static nl.qbusict.cupboard.CupboardFactory.cupboard;
-import android.app.LoaderManager;
-import android.content.Loader;
-import android.database.Cursor;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;*/
 
-import java.util.ArrayList;
 
 
 /**
@@ -56,6 +30,8 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     //private ArrayList<Movie> items;
     //private MovieAdapter adapter;
     private MovieCursorAdapter adapter;
+    private ProgressDialog dialog;
+
 
     public MainActivityFragment() {
     }
@@ -86,9 +62,13 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
                 Movie movies = (Movie) adapterView.getItemAtPosition(i);
 
+                if (!esTablet()) {
                 Intent intent = new Intent(getContext(), DetalleFilmActivity.class);
                 intent.putExtra("movies", movies);
                 startActivity(intent);
+                }else {
+                    Events.create("cartas-selected").param(movies).post();
+                }
             }
         });
 
@@ -97,17 +77,32 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
         return view;
     }
 
+    /*@Events.Subscribe("start-downloading-data")
+    void preRefresh() {
+        dialog.show();
+    }
+
+    @Events.Subscribe("finish-downloading-data")
+    void afterRefresh() {
+        dialog.dismiss();
+    }*/
+
 
     public void onStart() {
         super.onStart();
         refresh();
+        //Events.register(this);
     }
 
+    boolean esTablet() {
+        return getResources().getBoolean(R.bool.tablet);
+    }
 
 
     private void refresh() {
 
-        RefreshDataTask task = new RefreshDataTask();
+        //RefreshDataTask task = new RefreshDataTask();
+        RefreshDataTask task = new RefreshDataTask(getActivity().getApplicationContext());
         task.execute();
 
     }
@@ -128,7 +123,9 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
     }
 
 
-    private class RefreshDataTask extends AsyncTask<Void, Void, Void> {
+    /*private class RefreshDataTask extends AsyncTask<Void, Void, Void> {
+
+
         @Override
         protected Void  doInBackground(Void... voids) {
             Api mlApi = new Api();
@@ -139,7 +136,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
             /*UriHelper helper = UriHelper.with(MovieContentProvider.AUTHORITY);
             Uri movieUri = helper.getUri(Movie.class);
             cupboard().withContext(getContext()).put(movieUri, Movie.class, result);*/
-            DataManager.deleteMovie(getContext());
+            /*DataManager.deleteMovie(getContext());
             DataManager.saveMovie(result, getContext());
 
 
@@ -157,7 +154,7 @@ public class MainActivityFragment extends Fragment implements LoaderManager.Load
 
         }*/
 
-    }
+    //}
 
 
 
