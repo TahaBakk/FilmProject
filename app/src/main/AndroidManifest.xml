@@ -24,6 +24,12 @@
             android:name=".DetalleFilmActivity"
             android:label="@string/title_activity_detalle_film"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <provider
+            android:name=".MovieContentProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false" />
+
     </application>
 
 </manifest>
