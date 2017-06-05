@@ -12,6 +12,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.databinding.DataBindingUtil;
 import com.example.taha.filmproject.databinding.FragmentMainBinding;
+import android.net.Uri;
+import nl.littlerobots.cupboard.tools.provider.UriHelper;
+import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 
 import java.util.ArrayList;
@@ -81,17 +84,23 @@ public class MainActivityFragment extends Fragment {
 
 
 
-    private class RefreshDataTask extends AsyncTask<Void, Void, ArrayList<Movie>> {
+    private class RefreshDataTask extends AsyncTask<Void, Void, Void> {
         @Override
-        protected ArrayList<Movie> doInBackground(Void... voids) {
+        protected Void  doInBackground(Void... voids) {
             Api mlApi = new Api();
             ArrayList<Movie> result;
             result = mlApi.getDades();
             Log.d("DEBUG=****>", result != null ? result.toString() : null);
 
-            return result;
+            UriHelper helper = UriHelper.with(MovieContentProvider.AUTHORITY);
+            Uri movieUri = helper.getUri(Movie.class);
+            cupboard().withContext(getContext()).put(movieUri, Movie.class, result);
+
+
+            //return result;
+            return null;
         }
-        @Override
+        /*@Override
         protected void onPostExecute(ArrayList<Movie> cartap) {
             super.onPostExecute(cartap);
             adapter.clear();
@@ -100,7 +109,7 @@ public class MainActivityFragment extends Fragment {
                 adapter.add(cartap.get(i));
             }
 
-        }
+        }*/
 
     }
 
