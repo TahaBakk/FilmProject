@@ -16,7 +16,7 @@ public class Api {
 
     //imagen https://image.tmdb.org/t/p/w500/--RUTAIMAGEN
 
-    static ArrayList<Movie> getMatch() {
+    static ArrayList<Movie> getDades() {
         Uri builtUri = Uri.parse("https://api.themoviedb.org/3/movie/top_rated?api_key=82f0ce609a809c8375dc4061e7526935&language=en-US&page=1")
                 .buildUpon()
                 .build();
