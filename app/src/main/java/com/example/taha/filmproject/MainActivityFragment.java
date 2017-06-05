@@ -92,9 +92,11 @@ public class MainActivityFragment extends Fragment {
             result = mlApi.getDades();
             Log.d("DEBUG=****>", result != null ? result.toString() : null);
 
-            UriHelper helper = UriHelper.with(MovieContentProvider.AUTHORITY);
+            /*UriHelper helper = UriHelper.with(MovieContentProvider.AUTHORITY);
             Uri movieUri = helper.getUri(Movie.class);
-            cupboard().withContext(getContext()).put(movieUri, Movie.class, result);
+            cupboard().withContext(getContext()).put(movieUri, Movie.class, result);*/
+
+            DataManager.saveMovie(result, getContext());
 
 
             //return result;
