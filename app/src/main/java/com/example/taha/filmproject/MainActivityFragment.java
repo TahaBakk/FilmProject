@@ -19,8 +19,8 @@ import java.util.ArrayList;
  */
 public class MainActivityFragment extends Fragment {
 
-    private ArrayList<String> items;
-    private ArrayAdapter<String> adapter;
+    private ArrayList<Movie> items;
+    private MovieAdapter adapter;
 
     public MainActivityFragment() {
     }
@@ -34,12 +34,12 @@ public class MainActivityFragment extends Fragment {
 
 
         items = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(
+        adapter = new MovieAdapter(
                 getContext(),
                 R.layout.datos_item,
-                R.id.tv1,
                 items
         );
+
         lvHistorial.setAdapter(adapter);
 
         /*lvHistorial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -87,9 +87,9 @@ public class MainActivityFragment extends Fragment {
         protected void onPostExecute(ArrayList<Movie> cartap) {
             super.onPostExecute(cartap);
             adapter.clear();
-            for(int i = 0; i < 20; i++)
+            for(int i = 0; i < cartap.size(); i++)
             {
-                adapter.add(cartap.get(i).getTitle());
+                adapter.add(cartap.get(i));
             }
 
         }
