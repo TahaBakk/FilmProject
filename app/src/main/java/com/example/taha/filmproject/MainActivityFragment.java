@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.databinding.DataBindingUtil;
+import com.example.taha.filmproject.databinding.FragmentMainBinding;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 
 
@@ -29,9 +31,10 @@ public class MainActivityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View  view = inflater.inflate(R.layout.fragment_main, container, false);
-
-        ListView lvHistorial = (ListView) view.findViewById(R.id.lvHistorial);
+        //View  view = inflater.inflate(R.layout.fragment_main, container, false);
+        FragmentMainBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
+        View view = binding.getRoot();
+        //ListView lvHistorial = (ListView) view.findViewById(R.id.lvHistorial);
 
 
         items = new ArrayList<>();
@@ -41,9 +44,9 @@ public class MainActivityFragment extends Fragment {
                 items
         );
 
-        lvHistorial.setAdapter(adapter);
+        binding.lvHistorial.setAdapter(adapter);
 
-        lvHistorial.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        binding.lvHistorial.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 

@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.databinding.DataBindingUtil;
+import com.example.taha.filmproject.databinding.DatosItemBinding;
+
 
 import com.bumptech.glide.Glide;
 
