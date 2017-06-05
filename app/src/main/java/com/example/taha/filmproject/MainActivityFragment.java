@@ -9,10 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+
 
 /**
  * A placeholder fragment containing a simple view.
@@ -42,13 +43,17 @@ public class MainActivityFragment extends Fragment {
 
         lvHistorial.setAdapter(adapter);
 
-        /*lvHistorial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent details = new Intent(getContext(), matchActivity.class);
-                details.putExtra("match", items.get(position));
-                startActivity(details);
+        lvHistorial.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Movie movies = (Movie) adapterView.getItemAtPosition(i);
+
+                Intent intent = new Intent(getContext(), DetalleFilmActivity.class);
+                intent.putExtra("movies", movies);
+                startActivity(intent);
             }
-        });*/
+        });
 
 
 

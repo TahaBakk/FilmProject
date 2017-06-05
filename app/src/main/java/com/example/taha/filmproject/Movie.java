@@ -1,10 +1,12 @@
 package com.example.taha.filmproject;
 
+import java.io.Serializable;
+
 /**
  * Created by taha on 05/06/2017.
  */
 
-public class Movie {
+public class Movie implements Serializable {
 
     Boolean adult;
     int vote_count;
